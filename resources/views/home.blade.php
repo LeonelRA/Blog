@@ -19,25 +19,3 @@
 	</div>
 </div>
 @endsection
-
-@push('scripts')
-	<script type="text/javascript">
-		var post = 0;
-
-		Echo.channel('NewPost').listen('CreatePost', e => {
-			post += e.post;
-
-			const notificationElement = document.getElementById('notification');
-
-			notificationElement.innerText = 'A new post was created / updated';
-
-			notificationElement.classList.remove('d-none');
-
-			notificationElement.classList.add('alert');
-			notificationElement.classList.add('alert-success');
-
-			console.log(post);
-		});
-	</script>
-
-@endpush

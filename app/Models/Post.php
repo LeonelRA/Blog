@@ -33,10 +33,6 @@ class Post extends Model
         'comments'
     ];
 
-    protected $dispatchesEvents = [
-        'updated' => CreatePost::class,
-    ];
-
     public function getRouteKeyName()
     {
         return 'slug';
