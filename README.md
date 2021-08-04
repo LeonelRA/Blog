@@ -1,4 +1,4 @@
-# BLOG LR 1.0.0
+# BLOG LR 1.5.0
 
 Un blog con funciones de administrador para controlar cualquier tipo de dato. Este proyecto cuenta con creación de post como borrador para actualizar todas las veces que quieras y actualizarla de forma publica para que todo los demás lo puedan ver.
 
