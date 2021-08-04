@@ -65,7 +65,7 @@
 
                     <div class="form-group mb-0">
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-lr btn-block">
+                            <button type="submit" class="btn btn-primary btn-block">
                                 {{ __('Register') }}
                             </button>
                         </div>

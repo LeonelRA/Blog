@@ -9,7 +9,7 @@
             @csrf
             @method('PUT')
 
-            <div class="shadow bg-white radius-lr p-5 mt-4 col-md-8">
+            <div class="shadow-sm bg-white p-5 mt-4 col-md-8">
 
                 <h2 class="text-center">{{ __('update your post') }}</h2>
                 <div>
@@ -17,7 +17,7 @@
                         <label for="title" class="col-form-label">{{ __('Title') }}</label>
 
                         <div>
-                            <input id="title" type="text" class="form-control rounded-pill border-lr @error('title') is-invalid @enderror" name="title" value="{{ old('title') ?? $post->title }}" required autofocus>
+                            <input id="title" type="text" class="form-control border-lr @error('title') is-invalid @enderror" name="title" value="{{ old('title') ?? $post->title }}" required autofocus>
 
                             @error('title')
                                 <span class="invalid-feedback" role="alert">
@@ -31,7 +31,7 @@
                         <label for="slug" class="col-form-label">{{ __('Slug') }}</label>
 
                         <div>
-                            <input id="slug" type="text" class="form-control rounded-pill border-lr @error('slug') is-invalid @enderror" name="slug" value="{{ old('slug') ?? $post->slug }}">
+                            <input id="slug" type="text" class="form-control border-lr @error('slug') is-invalid @enderror" name="slug" value="{{ old('slug') ?? $post->slug }}">
 
                             @error('slug')
                                 <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
 
                     <div class="form-group mb-0">
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-lr btn-block rounded-pill">
+                            <button type="submit" class="btn btn-lr btn-block">
                                 {{ __('Update') }}
                             </button>
                         </div>
@@ -83,11 +83,11 @@
             </div>
 
             <div class="col-md-4">
-                <div class="shadow bg-white radius-lr p-5 mt-4">
+                <div class="shadow-sm bg-white p-5 mt-4">
                     <h2 class="text-center">{{ __('Categories') }}</h2>
 
                     <div>
-                        <select name="category" class="custom-select border-lr rounded-pill">
+                        <select name="category" class="custom-select border-lr">
                             @foreach($categories as $category)
                                 <option {{ ($category->name == $post->category->name || $category->name == old('category')) ? 'selected' : ''}} value="{{ $category->name }}">
                                     {{ $category->name }}
@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <div class="shadow bg-white radius-lr p-5 mt-4">
+                <div class="shadow-sm bg-white p-5 mt-4">
                     <h2 class="text-center">{{ __('Tags') }}</h2>
 
                     <div>
@@ -122,11 +122,11 @@
 
                 </div>
 
-                <div class="shadow bg-white radius-lr p-5 mt-4">
+                <div class="shadow-sm bg-white p-5 mt-4">
                     <h2 class="text-center">{{ __('Status') }}</h2>
 
                     <div>
-                          <select name="status" class="custom-select border-lr rounded-pill">
+                          <select name="status" class="custom-select border-lr">
                             @foreach($statuses as $status)
                                 <option {{ ($status->name == $post->status->name || $status->name == old('status')) ? 'selected' : ''}} value="{{ $status->name }}">
                                     {{ $status->name }}
@@ -137,7 +137,7 @@
 
                 </div>
 
-                <div class="shadow bg-white radius-lr p-5 mt-4">
+                <div class="shadow-sm bg-white p-5 mt-4">
                     <h2 class="text-center">{{ __('Image') }}</h2>
 
                     <div>
@@ -174,14 +174,6 @@
 @endpush
 
 @push('styles')
-
-    <style type="text/css">
-        
-        body {
-            background-color: #38a6ff;
-        }
-
-    </style>
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css">
 

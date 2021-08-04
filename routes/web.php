@@ -16,16 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', App\Http\Controllers\HomeController::class);
 
 Auth::routes();
-Route::resource('/user', App\Http\Controllers\UserController::class)->only(['edit', 'update']);
+Route::resource('/user', App\Http\Controllers\Auth\EditController::class)->only(['edit', 'update','destroy']);
+
+Route::resource('/user', App\Http\Controllers\Auth\ShowController::class)->only(['index','show']);
 
 Route::resource('/post', App\Http\Controllers\PostController::class);
 
-Route::get('/categories/{category:name}', [App\Http\Controllers\CategoryController::class, 'show'])->name('category.show');
-Route::get('/tags/{tag:name}', [App\Http\Controllers\TagController::class, 'show'])->name('tag.show');
+Route::resource('/category', \App\Http\Controllers\Admin\CategoryController::class)->only('show');
+
+Route::resource('/tag', \App\Http\Controllers\Admin\TagController::class)->only('show');
 
 Route::post('/search', App\Http\Controllers\SearchController::class)->name('search');
 
-Route::resource('/comment', App\Http\Controllers\CommentController::class)->only(['store', 'edit', 'destroy']);
+Route::resource('/comment', App\Http\Controllers\CommentController::class)->only(['index', 'store', 'update', 'destroy']);
 
-Route::resource('/like', App\Http\Controllers\LikeController::class)->only(['store', 'destroy']);
-
+Route::resource('/like', App\Http\Controllers\LikeController::class)->only(['index', 'store', 'destroy']);

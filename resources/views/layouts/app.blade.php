@@ -68,6 +68,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('user.index') }}" class="dropdown-item">
+                                        {{ __('Profile') }}
+                                    </a>
+
                                     <a href="{{ route('user.edit', ['user' => \Auth::user()->username]) }}" class="dropdown-item">
                                         {{ __('Profile edit') }}
                                     </a>
@@ -97,26 +101,16 @@
             <div class="container">
                 <div class="row">
                     <div class="col-3">
-                        <span class="h5">{{ __('About') }}</span>
-                        <hr>
-                        <p>
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                        </p>
+                        @include('components.sidebar.about', ['shadow' => false])  
                     </div>
                     <div class="col-3">
-                         <span class="h5">{{ __('Categories') }}</span>
-                        <hr>  
-                        <p>
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                        </p>                     
+                        @include('components.sidebar.categories', ['shadow' => false])                    
                     </div>
                     <div class="col-3">
-                         <span class="h5">{{ __('Tags') }}</span>
-                        <hr>                       
+                        @include('components.sidebar.tags', ['shadow' => false])                      
                     </div>
                     <div class="col-3">
-                         <span class="h5">{{ __('Tags') }}</span>
-                        <hr>                           
+                        @include('components.sidebar.search', ['shadow' => false])                          
                     </div>
                 </div>
             </div>

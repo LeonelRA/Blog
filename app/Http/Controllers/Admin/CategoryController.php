@@ -1,13 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
+    public function __construct(){
+
+        $this->authorizeResource(Category::class, '/admin/category');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,17 +21,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('tables')->with([
+            'type' => 'categories',
+            'components' => Category::all(),
+        ]);
     }
 
     /**
@@ -36,7 +35,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Category::create([
+            'name' => $request->title,
+            'slug' => $request->title
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -47,23 +51,11 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('categories.show')->with([
-            'name' => $category->name,
+        return view('search')->with([
+            'search' => $category->name,
             'posts' => $category->posts()->public()->latest()->paginate(8),
-            'categories' => Category::all(),
-            'tags' => Tag::all(),
+            'type' => 'Category'
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
     }
 
     /**
@@ -75,7 +67,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        if ($request->json()) {
+            return DB::transaction(function() use ($request,$category){
+                $category->fill($request->all());
+                $category->save();
+
+                return response()->json([
+                    'validate' => true,
+                    'name' => $request->name
+                ]);
+            });
+        }
     }
 
     /**
@@ -86,6 +88,12 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        return DB::transaction(function() use ($category){
+            $category->delete();
+
+            return response()->json([
+                'validate' => true
+            ]);
+        });
     }
 }

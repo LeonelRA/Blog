@@ -11,25 +11,15 @@
                     <h2 class="h1 mb-4">{{ $post->title }}</h2>
 
                     <div>
-                        <span>{{ __("Likes : {$post->likes->count()}") }}</span>
-                        @if($post->myLike == false)
-                            <form method="POST" class="d-inline" action="{{ route('like.store', ['post' => $post->id]) }}">
-                                @csrf
-                                <button type="submit" class="bg-transparent border-0">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                            </form>
-                        @else
-                            <form method="POST" class="d-inline" action="{{ route('like.destroy', ['like' => $post->myLike]) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-transparent border-0">
-                                    <i class="fas fa-heart"></i>
-                                </button>
-                            </form>
-                        @endif
 
-                    </div>
+                        <like-component 
+                            :like="{{ $post->myLike }}" 
+                            :likes="{{ $post->likes->count() }}"
+                            :user="{{ Auth::check() ? Auth::id() : 0 }}" 
+                            :post="{{ $post->id }}">    
+                        </like-component>
+
+                    </div>  
                 </div>
 
                 <p>{{ __("Category: {$post->category->name}") }}</p>
@@ -48,10 +38,10 @@
                     <hr>
                     <div class="row">
                         @empty(!$next)
-                            @include('components.posts.item', ['post' => $next ])
+                            @include('components.posts.item', ['post' => $next, 'shadow' => false ])
                         @endempty
                         @empty(!$prev)
-                            @include('components.posts.item', ['post' => $prev ])
+                            @include('components.posts.item', ['post' => $prev, 'shadow' => false ])
                         @endempty
 
                     </div>
@@ -65,16 +55,12 @@
                 <h2 class="h1">{{ __('Comment') }}</h2>
 
                 <hr>
-                <form method="POST" action="{{ route('comment.store', ['post' => $post->id]) }}">
-                    @csrf
-                    <div class="form-group">
-                        <label for="comment">{{ __('Your comment') }}</label>
-                        <input type="hidden" name="reply" value="">
-                        <textarea name="text" class="form-control" id="comment" rows="6"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-lr btn-block mb-5">
-                        {{ __('Comment') }}
-                    </button>
+
+                    <comment-component
+                        :user="{{ Auth::check() ? Auth::id() : 0 }}"
+                        :post="{{ $post->id }}">
+                    </comment-component>
+
                 </form>
 
                 <div>
@@ -98,7 +84,7 @@
 
         <div class="col-md-4">
 
-            @include('components.sidebar')
+            @include('components.sidebar.list', ['shadow' => false ])
 
         </div>
     </div>

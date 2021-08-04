@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Tag;
-use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
@@ -15,17 +16,10 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('tables')->with([
+            'type' => 'tags',
+            'tags' => Tag::all(),
+        ]);
     }
 
     /**
@@ -36,7 +30,12 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Tag::create([
+            'name' => $request->title,
+            'slug' => $request->title
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -47,23 +46,11 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        return view('tags.show')->with([
-            'name' => $tag->name,
+        return view('search')->with([
+            'search' => $tag->name,
             'posts' => $tag->posts()->public()->latest()->paginate(8),
-            'categories' => Category::all(),
-            'tags' => Tag::all(),
+            'type' => 'Tag'
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tag $tag)
-    {
-        //
     }
 
     /**
@@ -75,7 +62,17 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        if ($request->json()) {
+            return DB::transaction(function() use ($request,$tag){
+                $tag->fill($request->all());
+                $tag->save();
+
+                return response()->json([
+                    'validate' => true,
+                    'name' => $request->name
+                ]);
+            });
+        }
     }
 
     /**
@@ -86,6 +83,12 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        return DB::transaction(function() use ($tag){
+            $tag->delete();
+
+            return response()->json([
+                'validate' => true
+            ]);
+        });
     }
 }

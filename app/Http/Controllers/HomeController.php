@@ -18,8 +18,6 @@ class HomeController extends Controller
     {
         return view('home')->with([
             'posts' => Post::public()->orderBy('published_at', 'desc')->paginate(8),
-            'categories' => Category::all(),
-            'tags' => Tag::all(),
         ]);
     }
 }

@@ -10,10 +10,20 @@
                 <h5 class="mt-0">
                     {{ $comment->user->username }}
                 </h5>
+
                 <hr>
-                <p>
-                    {{ $comment->text }}
-                </p>
+
+                <div id="{{ "comment-{$comment->id}" }}">
+                    <p>
+                        {{ $comment->text }}
+                    </p>
+                </div>
+
+                <option-comment-component
+                    :user="{{ Auth::id() == $comment->user_id ? 'true' : 'false' }}"
+                    :comment="{{ $comment }}">
+                </option-comment-component>
+
             </div>
         </div>
 

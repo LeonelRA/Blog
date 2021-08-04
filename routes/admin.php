@@ -17,8 +17,15 @@ Route::get('/', function(){
 	return view('admin');
 })->name('admin');
 
-Route::get('/posts', function(){
+Route::get('/post', function(){
 	return view('posts.index')->with([
-		'posts' => \App\Models\Post::latest()->paginate(8),
+		'type' => 'posts',
+		'posts' => \App\Models\Post::orderBy('published_at', 'desc')->paginate(8),
 	]);
 })->name('admin.index');
+
+Route::get('/user', \App\Http\Controllers\Admin\UserController::class)->name('admin.user');//arreglar
+
+Route::resource('/category', \App\Http\Controllers\Admin\CategoryController::class)->except('show');
+
+Route::resource('/tag', \App\Http\Controllers\Admin\TagController::class)->except('show');

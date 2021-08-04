@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Http\Requests\CommentRequest;
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
+
+    public function __construct(){
+        $this->authorizeResource(Comment::class, 'comment');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,17 +21,10 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('tables')->with([
+            'type' => 'comments',
+            'components' => Comment::whereUserId(\Auth::id())->paginate(8),
+        ]);
     }
 
     /**
@@ -36,40 +35,23 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        if (\Auth::check()) {
+        if ($request->json()) {
+            return DB::transaction(function() use ($request){
 
-            $user = $request->user();
+                $user = \Auth::user();
 
-            $user->comments()->create([
-                'post_id' => $request->post,
-                'text' => $request->text,
-                'comment_parent' => 22
-            ]);
+                $user->comments()->create([
+                    'post_id' => $request->post,
+                    'text' => $request->text,
+                    'comment_parent' => $request->reply
+                ]);
+
+                return response()->json([
+                    'comment' => 'Comentaste desde json'
+                 ]);
+
+            });
         }
-
-        return redirect()->back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
     }
 
     /**
@@ -79,9 +61,19 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(CommentRequest $request,Comment $comment)
     {
-        //
+        if ($request->json()) {
+            return DB::transaction(function() use ($request,$comment){
+                $comment->fill($request->validated());
+                $comment->save();
+
+                return response()->json([
+                    'comment' => true,
+                    'text' => $request->text
+                ]);
+            });
+        }
     }
 
     /**
@@ -92,6 +84,13 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        return DB::transaction(function() use ($comment){
+            $comment->delete();
+
+            return response()->json([
+                'comment' => 'eliminado'
+            ]);
+        });
+        
     }
 }

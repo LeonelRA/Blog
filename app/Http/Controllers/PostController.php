@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
-use App\Models\Tag;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -27,8 +27,8 @@ class PostController extends Controller
      */
     public function index()
     {
-
-        return view('posts.index')->with([
+        return view('tables')->with([
+            'type' => 'posts',
             'posts' => Post::whereUserId(\Auth::id())->orderBy('published_at', 'desc')->paginate(8),
         ]);
     }
@@ -42,14 +42,20 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-        $user = $request->user();
+        if(!Post::whereSlug(Str::slug($request->title,'_'))->exists()){
+            $user = $request->user();
 
-        $post = $user->posts()->create([
-            'title' => $request->title,
-            'slug' => $request->title,
-        ]);
+            $post = $user->posts()->create([
+                'title' => $request->title,
+                'slug' => $request->title,
+                'published_at' => now()
+            ]);
 
-        return redirect()->route('post.edit', $post->slug);
+            return redirect()->route('post.edit', $post->slug);
+        }
+
+        return redirect()->back();
+
     }
 
     /**
@@ -68,8 +74,6 @@ class PostController extends Controller
             'post' => $post,
             'next' => $next,
             'prev' => $prev,
-            'categories' => Category::all(),
-            'tags' => Tag::all(),
         ]);
     }
 
@@ -84,8 +88,6 @@ class PostController extends Controller
 
         return view('posts.edit')->with([
             'post' => $post,
-            'categories' => Category::all(),
-            'tags' => Tag::all(),
             'statuses' => Status::all(),
         ]);
     }
@@ -101,8 +103,6 @@ class PostController extends Controller
     {
 
         $post->fill($request->validated());
-
-        $post->published_at = now();
 
         $post->category_id = Category::id($request->category);
         
@@ -136,6 +136,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $post->likes()->delete();
 
         $post->delete();
 

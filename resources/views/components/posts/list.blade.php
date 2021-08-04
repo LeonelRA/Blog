@@ -7,14 +7,15 @@
 
 			@endforeach	
 
+			{{ $posts->links() }}	
 		</div>
-
-		{{ $posts->links() }}
-
+		
 	@else
 
         <div class="alert alert-warning" role="alert">
+
             {{ __('No post found') }}
+            
         </div>
-        
+
 	@endif

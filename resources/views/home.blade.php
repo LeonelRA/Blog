@@ -3,17 +3,16 @@
 @section('content')
 <div class="container">
 	<div class="row">
+
 		<div class="col-md-8">
 
-			<div id="notification" class="d-none"></div>
-
-			@include('components.posts.list', ['post' => $posts])
+			@include('components.posts.list', ['posts' => $posts, 'shadow' => true])
 
 		</div>
 
 		<div class="col-md-4">
 
-			@include('components.sidebar')
+			@include('components.sidebar.list', ['shadow' => true])
 
 		</div>
 	</div>

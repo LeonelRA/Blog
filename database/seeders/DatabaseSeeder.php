@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+
 use App\Models\User;
 use App\Models\Profile;
 
@@ -23,16 +25,45 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $category = Category::create(['name' => 'without category']);
-        $category = Category::create(['name' => 'Html']);
-        $category = Category::create(['name' => 'Python']);
-        $category = Category::create(['name' => 'Laravel']);
+        $category = Category::create([
+            'name' => 'without category',
+            'slug' => Str::slug('without category', '_')
+        ]);
+        $category = Category::create([
+            'name' => 'Html',
+            'slug' => Str::slug('Html', '_')
+        ]);
+        $category = Category::create([
+            'name' => 'Python',
+            'slug' => Str::slug('Python', '_')
+        ]);
+        $category = Category::create([
+            'name' => 'Laravel',
+            'slug' => Str::slug('Laravel', '_')
+        ]);
 
-        $tag = Tag::create(['name' => 'programming']);
-        $tag = Tag::create(['name' => 'Hacking']);
-        $tag = Tag::create(['name' => 'Hardware']);
-        $tag = Tag::create(['name' => 'sofware']);
-        $tag = Tag::create(['name' => 'Hello word']);
+
+
+        $tag = Tag::create([
+            'name' => 'programming',
+            'slug' => Str::slug('programming', '_')
+        ]);
+        $tag = Tag::create([
+            'name' => 'Hacking',
+            'slug' => Str::slug('Hacking', '_')
+        ]);
+        $tag = Tag::create([
+            'name' => 'Hardware',
+            'slug' => Str::slug('Hardware', '_')
+        ]);
+        $tag = Tag::create([
+            'name' => 'sofware',
+            'slug' => Str::slug('sofware', '_')
+        ]);
+        $tag = Tag::create([
+            'name' => 'Hello word',
+            'slug' => Str::slug('Hello word', '_')
+        ]);
 
         $status = Status::create(['name' => 'public']);
         $status = Status::create(['name' => 'private']);

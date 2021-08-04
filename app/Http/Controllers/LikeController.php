@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Like;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LikeController extends Controller
 {
@@ -15,17 +16,10 @@ class LikeController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('tables')->with([
+            'type' => 'likes',
+            'components' => Like::whereUserId(\Auth::id())->paginate(8),
+        ]);
     }
 
     /**
@@ -36,51 +30,21 @@ class LikeController extends Controller
      */
     public function store(Request $request)
     {
-        if (\Auth::check()) {
-            $post = Post::find($request->post);
 
-            $post->likes()->create([
-                'user_id' => $request->user()->id,
-            ]);
+        if ($request->json()) {
 
-            return redirect()->back();
+            return DB::transaction(function() use ($request){
+                $post = Post::find($request->post);
+
+                $post->likes()->create([
+                    'user_id' => $request->user,
+                ]);
+
+                return response()->json([
+                    'like' => Like::latest()->first()
+                ]);
+            });
         }
-
-        return redirect()->back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Like  $like
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Like $like)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Like  $like
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Like $like)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Like  $like
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Like $like)
-    {
-        //
     }
 
     /**
@@ -89,10 +53,16 @@ class LikeController extends Controller
      * @param  \App\Models\Like  $like
      * @return \Illuminate\Http\Response
      */
+
     public function destroy(Like $like)
     {
-        $like->delete();
+        return DB::transaction(function() use ($like){
+            $like->delete();
 
-        return redirect()->back();
+            return response()->json([
+                'like' => false
+            ]);
+            
+        });
     }
 }

@@ -33,6 +33,10 @@ class Post extends Model
         'comments'
     ];
 
+    protected $dispatchesEvents = [
+        'updated' => CreatePost::class,
+    ];
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -75,7 +79,7 @@ class Post extends Model
     }
 
     public function getMyLikeAttribute(){
-        return $this->likes()->whereUserId(\Auth::id())->first() ?? false;
+        return $this->likes()->whereUserId(\Auth::id())->first() ?? 'false';
     }
 
 }

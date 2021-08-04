@@ -51,7 +51,7 @@
 
 
                             @if (Route::has('password.request'))
-                                <a class="btn btn-link link-lr" href="{{ route('password.request') }}">
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                             @endif                           
@@ -59,7 +59,7 @@
 
                         <div class="form-group">
                             <div>
-                                <button type="submit" class="btn btn-lr btn-block rounded">
+                                <button type="submit" class="btn btn-primary btn-block rounded">
                                     {{ __('Login') }}
                                 </button>
                             </div>

@@ -12,9 +12,8 @@ class SearchController extends Controller
     public function __invoke(SearchRequest $request){
         return view('search')->with([
             'posts' => Post::public()->where('title','like','%'.$request->search.'%')->latest()->paginate(8),
-            'categories' => Category::all(),
-            'tags' => Tag::all(),
-            'search' => $request->search
+            'search' => $request->search,
+            'type' => 'Searching'
         ]);
     }
 }
