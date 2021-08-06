@@ -14,7 +14,7 @@ En tu perfil podras agregar tu propia foto de perfil y editar cualquier tipo de 
 ## Lenguajes utilizados en este proyecto
 
 * Laravel 8
-* Vuejs 4
+* Vuejs 3
 * Bootstrap 4
 * Javascript
 * Html 5
