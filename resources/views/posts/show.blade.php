@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-8 mb-3">
+        <div class="col-md-12 col-lg-8 mb-3">
 
             <div class="shadow-sm bg-white p-5">
 
@@ -82,7 +82,7 @@
 
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-12 col-lg-4">
 
             @include('components.sidebar.list', ['shadow' => false ])
 

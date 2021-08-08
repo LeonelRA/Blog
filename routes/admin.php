@@ -18,7 +18,7 @@ Route::get('/', function(){
 })->name('admin');
 
 Route::get('/post', function(){
-	return view('posts.index')->with([
+	return view('search')->with([
 		'type' => 'posts',
 		'posts' => \App\Models\Post::orderBy('published_at', 'desc')->paginate(8),
 	]);

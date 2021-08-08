@@ -9,7 +9,7 @@
             @csrf
             @method('PUT')
 
-            <div class="shadow-sm bg-white p-5 mt-4 col-md-8">
+            <div class="shadow-sm bg-white p-5 mt-4 col-md-12 col-lg-8">
 
                 <h2 class="text-center">{{ __('update your post') }}</h2>
                 <div>
@@ -74,7 +74,7 @@
 
                     <div class="form-group mb-0">
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-lr btn-block">
+                            <button type="submit" class="btn btn-primary btn-block">
                                 {{ __('Update') }}
                             </button>
                         </div>
@@ -82,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-12 col-lg-4">
                 <div class="shadow-sm bg-white p-5 mt-4">
                     <h2 class="text-center">{{ __('Categories') }}</h2>
 
@@ -111,8 +111,9 @@
                                     @empty(!$post->image) 
                                         @foreach($post->tags as $tagSelected) 
                                         {{ $tagSelected->name == $tag->name ? 'checked' : '' }} 
-                                        @endforeach>
+                                        @endforeach
                                     @endempty
+                                >
                                 <label class="form-check-label" for="{{ $tag->name }}">
                                     {{ $tag->name }}
                                 </label>
@@ -174,7 +175,5 @@
 @endpush
 
 @push('styles')
-
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css">
-
 @endpush

@@ -6,14 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    public function __construct(){
-
-        $this->authorizeResource(Category::class, '/admin/category');
-        
-    }
     /**
      * Display a listing of the resource.
      *
@@ -35,12 +31,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create([
-            'name' => $request->title,
-            'slug' => $request->title
-        ]);
+        if(!Category::whereSlug(Str::slug($request->title,'_'))->exists()){
 
-        return redirect()->back();
+            Category::create([
+                'name' => $request->title,
+                'slug' => $request->title
+            ]);
+
+            return redirect()->back();
+        }
+
+        return redirect()->back()->withErrors('The Name has already been taken.');
     }
 
     /**

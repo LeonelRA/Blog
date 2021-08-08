@@ -1,4 +1,4 @@
-    <div class="col-md-6 mb-3">
+    <div class="col-md-12 col-lg-6 mb-3">
         <div class="card @if($shadow) border-0 shadow-sm @else border @endif">
             @empty(!$post->image)
                 <img class="{{ $post->name }}" src="{{ asset('/images/'.$post->image->path) }}" alt="Card image cap">

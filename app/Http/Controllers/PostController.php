@@ -54,7 +54,7 @@ class PostController extends Controller
             return redirect()->route('post.edit', $post->slug);
         }
 
-        return redirect()->back();
+        return redirect()->back()->withErrors('The Title has already been taken.');
 
     }
 

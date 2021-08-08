@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
@@ -30,12 +31,17 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        Tag::create([
-            'name' => $request->title,
-            'slug' => $request->title
-        ]);
+        if(!Tag::whereSlug(Str::slug($request->title,'_'))->exists()){
 
-        return redirect()->back();
+            Tag::create([
+                'name' => $request->title,
+                'slug' => $request->title
+            ]);
+
+            return redirect()->back();
+        }
+
+        return redirect()->back()->withErrors('The Name has already been taken.');
     }
 
     /**

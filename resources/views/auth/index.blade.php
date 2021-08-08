@@ -5,7 +5,7 @@
 <div class="container">
 		<div class="row">
 			<div class="col-md-4 rounded">
-				<div class="shadow-sm p-3 bg-white">
+				<div class="col-md-12 col-lg-4 rounded mb-3">
 					<p class="h3">{{ __('Posts') }}</p>
 					<hr>
 					<p class="h3">{{ $user->posts->count() }}</p>
@@ -13,7 +13,7 @@
 			</div>
 
 			<div class="col-md-4 rounded">
-				<div class="shadow-sm p-3 bg-white">
+				<div class="col-md-12 col-lg-4 rounded mb-3">
 					<p class="h3">{{ __('Comments') }}</p>
 					<hr>
 					<p class="h3">{{ $user->comments->count() }}</p>
@@ -21,7 +21,7 @@
 			</div>
 
 			<div class="col-md-4 rounded">
-				<div class="shadow-sm p-3 bg-white">
+				<div class="col-md-12 col-lg-4 rounded mb-3">
 					<p class="h3">{{ __('Likes') }}</p>
 					<hr>
 					<p class="h3">{{ $user->likes->count() }}</p>
@@ -30,7 +30,7 @@
 		</div>
 
 		<div class="row mt-4">
-			<div class="col-md-6 rounded">
+			<div class="col-md-12 col-lg-6 rounded mb-3">
 				<div class="shadow-sm bg-white p-3">
 					<p class="h4">{{ __('My comments') }}</p>
 					<hr>
@@ -57,7 +57,7 @@
 					</div>
 				</div>
 				</div>
-				<div class="col-md-6 rounded">
+				<div class="col-md-12 col-lg-6 rounded mb-3">
 				<div class="shadow-sm bg-white p-3">
 					<p class="h4">{{ __('My likes') }}</p>
 					<hr>

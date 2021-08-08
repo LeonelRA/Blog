@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-         	<div class="col-md-10 shadow-sm bg-white rounded p-5 mt-4">
+         	<div class="col-md-12 col-lg-10 bg-white rounded p-5 mt-4">
 
                 <h2 class="text-center">{{ __("All {$type}") }}</h2>
 

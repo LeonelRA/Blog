@@ -100,16 +100,16 @@
         <footer class="bg-white py-4 mt-5 shadow-sm">
             <div class="container">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-md-12 col-lg-3">
                         @include('components.sidebar.about', ['shadow' => false])  
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-12 col-lg-3">
                         @include('components.sidebar.categories', ['shadow' => false])                    
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-12 col-lg-3">
                         @include('components.sidebar.tags', ['shadow' => false])                      
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-12 col-lg-3">
                         @include('components.sidebar.search', ['shadow' => false])                          
                     </div>
                 </div>

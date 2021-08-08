@@ -13,11 +13,13 @@ import CommentComponent from  './components/CommentComponent'
 import OptionCommentComponent from  './components/OptionCommentComponent'
 import OptionCategoriesTagsComponent from  './components/OptionCategoriesTagsComponent'
 
-createApp({
+const app = createApp({
     components: {
         LikeComponent,
         CommentComponent,
         OptionCommentComponent,
         OptionCategoriesTagsComponent
     }
-}).mount('#app');
+});
+app.config.isCustomElement = tag => tag.startsWith('trix-')
+app.mount('#app');

@@ -6,13 +6,13 @@
 
     <div class="row">
         <div class="col-md-8">
-            <input id="title" type="text" class="form-control mb-3 border-lr @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required>
+            <input id="title" type="text" class="form-control border-lr @if($errors->first()) is-invalid @endif" name="title" value="{{ old('title') }}" required>
 
-            @error('title')
+            @if($errors->first())
                 <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
+                    <strong>{{ $errors->first() }}</strong>
                 </span>
-            @enderror
+            @endif
         </div>
 
         <div class="col-md-4">
